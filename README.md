@@ -1,4 +1,4 @@
-# (TraffCal)
+# TraffCal
 
 Transformer-based traffic forecasting experiments and utilities.
 
@@ -91,3 +91,5 @@ python predict.py --filename predict.traff --save_name example
 - The folder name `newdatset/` is kept as-is to match the current repository contents.
 - `run_two_datasets.sh` references `../newdataset/`; update it to `../newdatset/` if needed in your local copy.
 - Some files are large (for example `.pt` and `.h5`); Git LFS is recommended for long-term storage.
+
+
