@@ -1,0 +1,19 @@
+{
+  "num_nodes": 200,
+  "num_edges": 870,
+  "accident_node_index": 0,
+  "accident_sensor_id": "1201054",
+  "steps": 24,
+  "step_seconds": 300,
+  "shock_strength": 1.0,
+  "diffusion_alpha": 0.55,
+  "decay_beta": 0.82,
+  "noise_std": 0.0,
+  "max_congestion": 1.0,
+  "mean_final_congestion": 0.27075615525245667,
+  "files": {
+    "congestion_csv": "/home/nihal/Desktop/JOYbaba/traffic_project/visualization/congestion_simulation.csv",
+    "animation_gif": "/home/nihal/Desktop/JOYbaba/traffic_project/visualization/congestion_propagation.gif",
+    "impact_curves_png": "/home/nihal/Desktop/JOYbaba/traffic_project/visualization/impact_curves.png"
+  }
+}
