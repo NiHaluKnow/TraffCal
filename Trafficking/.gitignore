@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+*.pyc
+
+# Local model/data artifacts
+newdatset/x.pt
+newdatset/y.pt
+newdatset/merged_scaled.csv
+newdatset/merged_unscaled.csv

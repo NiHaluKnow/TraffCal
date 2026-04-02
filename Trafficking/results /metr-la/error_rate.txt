@@ -1,0 +1,4 @@
+dataset=METR-LA
+run=full_dataset
+metric=MAE
+error_rate=1.2016

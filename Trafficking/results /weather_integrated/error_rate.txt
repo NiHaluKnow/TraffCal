@@ -1,0 +1,4 @@
+dataset=METR-LA+Weather
+run=full_dataset_regenerated
+metric=MAE
+error_rate=0.0570
