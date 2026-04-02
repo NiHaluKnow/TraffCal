@@ -2,8 +2,13 @@ import argparse
 import numpy as np
 import tensorflow as tf
 import torch
+from pathlib import Path
+import sys
 
-from model import transformer
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from All_model.transformer import transformer
 
 
 def load_pt_dataset(x_path, y_path, feature_index=0, aggregate="mean"):
@@ -54,9 +59,16 @@ def main():
     parser.add_argument("--save_name", type=str, default="ptdataset_trafficformer")
     args = parser.parse_args()
 
+    x_path = Path(args.x_path)
+    y_path = Path(args.y_path)
+    if not x_path.is_absolute():
+        x_path = PROJECT_ROOT / x_path
+    if not y_path.is_absolute():
+        y_path = PROJECT_ROOT / y_path
+
     x_all, y_all = load_pt_dataset(
-        args.x_path,
-        args.y_path,
+        str(x_path),
+        str(y_path),
         feature_index=args.feature_index,
         aggregate=args.aggregate,
     )
@@ -101,10 +113,13 @@ def main():
         metrics=[tf.keras.metrics.MeanAbsoluteError(name="mae")],
     )
 
+    models_dir = PROJECT_ROOT / "All_models"
+    models_dir.mkdir(parents=True, exist_ok=True)
+
     callbacks = [
         tf.keras.callbacks.EarlyStopping(monitor="val_loss", patience=8, restore_best_weights=True),
         tf.keras.callbacks.ModelCheckpoint(
-            filepath=f"model/{args.save_name}.weights.h5",
+            filepath=str(models_dir / f"{args.save_name}.weights.h5"),
             monitor="val_loss",
             save_best_only=True,
             save_weights_only=True,

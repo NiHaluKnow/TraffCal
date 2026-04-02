@@ -1,3 +1,0 @@
-experiment,mae,rmse,mape,input_len,num_features,train_samples,val_samples,test_samples,best_val_loss,weights_path
-baseline_metrla,1.6590384244918823,1.834365725517273,2.6459438800811768,12,1,790,169,170,0.1380322277545929,visualization/experiment_comparison/models/baseline_metrla.weights.h5
-weather_time_augmented_metrla,1.9901779890060425,2.3941235542297363,4.000412940979004,12,8,790,169,170,0.07190161198377609,visualization/experiment_comparison/models/weather_time_augmented_metrla.weights.h5

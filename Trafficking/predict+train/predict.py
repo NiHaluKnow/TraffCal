@@ -7,6 +7,17 @@ import argparse
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+def _read_sequence(data_path: Path) -> np.ndarray:
+    data = []
+    with open(data_path, "r") as f:
+        for d in f.readlines():
+            data.append(int(d))
+    return np.array(data).reshape([1, -1, 1])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -21,15 +32,10 @@ if __name__ == "__main__":
     DATA_PATH = args.filename
     SAVE_NAME = args.save_name
 
-    data = []
-    with open(f"data/{DATA_PATH}", "r") as f:
-        for d in f.readlines():
-            data.append(int(d))
-    data = np.array(data).reshape([1, -1, 1])
+    data = _read_sequence(PROJECT_ROOT / "data" / DATA_PATH)
     print(data)
 
-
-    model = tf.keras.models.load_model(f"./model/{SAVE_NAME}.h5")
+    model = tf.keras.models.load_model(str(PROJECT_ROOT / "All_models" / f"{SAVE_NAME}.h5"))
     pred = model.predict(np.array(data))[0][0]
 
     print("=======MODEL OUTPUT=======")
@@ -38,14 +44,9 @@ if __name__ == "__main__":
 
 
 def get_predict(DATA_PATH, SAVE_NAME):
-    data = []
-    with open(f"data/{DATA_PATH}", "r") as f:
-        for d in f.readlines():
-            data.append(int(d))
-    data = np.array(data).reshape([1, -1, 1])
+    data = _read_sequence(PROJECT_ROOT / "data" / DATA_PATH)
     print(data)
 
-
-    model = tf.keras.models.load_model(f"./model/{SAVE_NAME}.h5")
+    model = tf.keras.models.load_model(str(PROJECT_ROOT / "All_models" / f"{SAVE_NAME}.h5"))
     pred = model.predict(np.array(data))[0][0]
     return pred

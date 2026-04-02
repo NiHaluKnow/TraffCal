@@ -7,8 +7,14 @@ import argparse
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from model import transformer
+from pathlib import Path
+import sys
 from sklearn.model_selection import train_test_split
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from All_model.transformer import transformer
 
 
 parser = argparse.ArgumentParser()
@@ -36,8 +42,9 @@ def make_dataset(data, window_size=20):
     return np.array(feature_list).reshape(-1, window_size, 1), np.array(label_list)
 
 
+data_file = PROJECT_ROOT / "data" / DATA_PATH
 data = []
-with open(f"data/{DATA_PATH}", "r") as f:
+with open(data_file, "r") as f:
     for d in f.readlines():
         data.append(int(d))
 data = np.array(data)
@@ -62,7 +69,9 @@ model.compile(
 )
 
 early_stop = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10)
-checkpoint = tf.keras.callbacks.ModelCheckpoint(f"model/{SAVE_NAME}.h5", monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
+models_dir = PROJECT_ROOT / "All_models"
+models_dir.mkdir(parents=True, exist_ok=True)
+checkpoint = tf.keras.callbacks.ModelCheckpoint(str(models_dir / f"{SAVE_NAME}.h5"), monitor='val_loss', verbose=1, save_best_only=True, mode='auto')
 
 history = model.fit(x_train, y_train, 
             epochs=200, 

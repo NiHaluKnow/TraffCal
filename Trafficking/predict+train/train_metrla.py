@@ -2,8 +2,13 @@ import argparse
 import numpy as np
 import tensorflow as tf
 import h5py
+from pathlib import Path
+import sys
 
-from model import transformer
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from All_model.transformer import transformer
 
 
 def make_dataset(data, window_size):
@@ -48,7 +53,11 @@ def main():
     parser.add_argument("--save_name", type=str, default="metrla_trafficformer")
     args = parser.parse_args()
 
-    series = load_metrla_series(args.h5_path, mode=args.mode, sensor_index=args.sensor_index)
+    h5_path = Path(args.h5_path)
+    if not h5_path.is_absolute():
+        h5_path = PROJECT_ROOT / h5_path
+
+    series = load_metrla_series(str(h5_path), mode=args.mode, sensor_index=args.sensor_index)
 
     train_end = int(len(series) * 0.7)
     val_end = int(len(series) * 0.85)
@@ -86,10 +95,13 @@ def main():
         metrics=[tf.keras.metrics.MeanAbsoluteError(name="mae")],
     )
 
+    models_dir = PROJECT_ROOT / "All_models"
+    models_dir.mkdir(parents=True, exist_ok=True)
+
     callbacks = [
         tf.keras.callbacks.EarlyStopping(monitor="val_loss", patience=5, restore_best_weights=True),
         tf.keras.callbacks.ModelCheckpoint(
-            filepath=f"model/{args.save_name}.weights.h5",
+            filepath=str(models_dir / f"{args.save_name}.weights.h5"),
             monitor="val_loss",
             save_best_only=True,
             save_weights_only=True,
