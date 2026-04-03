@@ -1,0 +1,7 @@
+model=rf_xgboost
+dataset=METR-LA base (mean mode)
+split=23970/5141/5141
+window_size=20
+metric=MAE(original_scale)
+error_rate=1.141856
+mae_normalized=0.080917

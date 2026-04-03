@@ -1,0 +1,6 @@
+model=cnn
+dataset=newdatset/x.pt+y.pt (full)
+alignment=transformer_train_ptdataset(feature_index=0,aggregate=mean,target=y_step0_mean)
+metric=MAE
+status=ok
+error_rate=0.135330

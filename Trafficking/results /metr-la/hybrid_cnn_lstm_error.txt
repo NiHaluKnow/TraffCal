@@ -1,0 +1,7 @@
+model=hybrid_cnn_lstm
+dataset=METR-LA base (mean mode)
+split=23970/5141/5141
+window_size=20
+metric=MAE(original_scale)
+error_rate=2.656890
+mae_normalized=0.188280

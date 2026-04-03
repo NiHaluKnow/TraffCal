@@ -1,0 +1,7 @@
+model=lstm_bilstm
+dataset=METR-LA base (mean mode)
+split=23970/5141/5141
+window_size=20
+metric=MAE(original_scale)
+error_rate=2.266045
+mae_normalized=0.160583
