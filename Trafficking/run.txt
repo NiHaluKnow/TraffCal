@@ -1,0 +1,22 @@
+
+## for inference run ::
+
+cd /home/nihal/Desktop/ML_50/Trafficking
+./run_local_inference.sh --dataset metrla weather --model transformer --sample-index 0 --num-samples 50
+
+# Transformer on METR-LA
+/home/nihal/Desktop/ML_50/.venv/bin/python "predict+train/train_metrla.py" \
+  --h5_path "data/metr-la/METR-LA.h5" \
+  --mode mean \
+  --epochs 30 \
+  --batch_size 64 \
+  --save_name metrla_full_run
+
+# Transformer on weather-integrated tensors
+/home/nihal/Desktop/ML_50/.venv/bin/python "predict+train/train_ptdataset.py" \
+  --x_path "newdatset/x.pt" \
+  --y_path "newdatset/y.pt" \
+  --aggregate mean \
+  --epochs 40 \
+  --batch_size 64 \
+  --save_name weather_integrated_full_run_v2
